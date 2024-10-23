@@ -15,4 +15,4 @@ export class EndUser {
   email: string;
 }
 
-export const CatSchema = SchemaFactory.createForClass(EndUser);
+export const EndUserSchema = SchemaFactory.createForClass(EndUser);
