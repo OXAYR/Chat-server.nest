@@ -3,6 +3,7 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserModule } from './module/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         uri: configService.get<string>('DATABASE_CONNECTION'),
       }),
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
