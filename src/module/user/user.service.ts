@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { EndUser } from './entities/user.entity';
 import { Model } from 'mongoose';
+import { LoginUserDto } from './dto/login-user.dto.s';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,14 @@ export class UserService {
   create(createUserDto: CreateUserDto): Promise<EndUser> {
     const createdEndUser = new this.EndUserModel(createUserDto);
     return createdEndUser.save();
+  }
+  async validateUser(loginUserDto: LoginUserDto): Promise<Enduser> {
+    const user = await this.EndUserModel.findOne({
+      where: { email: loginUserDto.email, password: loginUserDto.password },
+    });
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
   }
 
   findAll(): Promise<EndUser[]> {
