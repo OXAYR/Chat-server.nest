@@ -15,13 +15,16 @@ export class UserService {
     const createdEndUser = new this.EndUserModel(createUserDto);
     return createdEndUser.save();
   }
-  async validateUser(loginUserDto: LoginUserDto): Promise<Enduser> {
+  async validateUser(loginUserDto: LoginUserDto): Promise<EndUser> {
     const user = await this.EndUserModel.findOne({
       where: { email: loginUserDto.email, password: loginUserDto.password },
     });
+    console.log('here os the sue rfound ====>', user);
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
+
+    return user;
   }
 
   findAll(): Promise<EndUser[]> {
